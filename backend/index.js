@@ -41,15 +41,23 @@ try {
 
 const db = admin.firestore();
 const app = express();
-const corsOptions = {
-  origin: ['https://yap-yap-orcin.vercel.app'], // Added as an array for flexibility
-  methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'], // Added OPTIONS, DELETE, and PUT methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Added Authorization header
-  credentials: true // Allow credentials
-};
 
-// Middleware
-app.use(cors(corsOptions));
+// CORS Configuration - Update to be more permissive
+app.use((req, res, next) => {
+  // Allow requests from any origin during development
+  res.header('Access-Control-Allow-Origin', '*'); 
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  
+  next();
+});
+
 app.use(express.json());
 
 // Store active tokens (in a real app, you'd use Redis or another datastore)
