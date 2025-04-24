@@ -42,9 +42,10 @@ try {
 const db = admin.firestore();
 const app = express();
 const corsOptions = {
-  origin: 'https://yap-yap-orcin.vercel.app', // Add the domain of your frontend
-  methods: ['GET', 'POST'], // Allow only specific methods if needed
-  allowedHeaders: ['Content-Type'], // Allow specific headers if necessary
+  origin: ['https://yap-yap-orcin.vercel.app'], // Added as an array for flexibility
+  methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'], // Added OPTIONS, DELETE, and PUT methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Added Authorization header
+  credentials: true // Allow credentials
 };
 
 // Middleware
