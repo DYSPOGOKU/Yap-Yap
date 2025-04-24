@@ -41,9 +41,14 @@ try {
 
 const db = admin.firestore();
 const app = express();
+const corsOptions = {
+  origin: 'https://yap-yap-orcin.vercel.app', // Add the domain of your frontend
+  methods: ['GET', 'POST'], // Allow only specific methods if needed
+  allowedHeaders: ['Content-Type'], // Allow specific headers if necessary
+};
 
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Store active tokens (in a real app, you'd use Redis or another datastore)
