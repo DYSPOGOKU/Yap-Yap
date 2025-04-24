@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Use environment variable for API URL, with fallback for development
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+// Use environment variable for API URL or the deployed URL as fallback
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://yap-yap-rw97.onrender.com/api';
 
 // Create axios instance
 const api = axios.create({
