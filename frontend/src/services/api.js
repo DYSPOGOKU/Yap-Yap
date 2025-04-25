@@ -14,9 +14,12 @@ const api = axios.create({
 // Add token to requests if available
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    // Get token from localStorage if in browser environment
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },
@@ -25,9 +28,7 @@ api.interceptors.request.use(
 
 // Auth API
 export const generateToken = (userId) => api.post('/auth/token', { userId });
-export const validateToken = (token) => api.get('/auth/validate', {
-  headers: { Authorization: `Bearer ${token}` }
-});
+export const validateToken = () => api.get('/auth/validate');  // Modified to use token from interceptor
 
 // Users API
 export const getUsers = () => api.get('/users');

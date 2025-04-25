@@ -24,8 +24,8 @@ export default function ChatPage({ params }) {
         // Store token in localStorage
         localStorage.setItem('token', token);
         
-        // Validate token
-        const response = await validateToken(token);
+        // Validate token - now using token from localStorage through interceptor
+        const response = await validateToken();
         
         if (response.data.valid) {
           const { user } = response.data;
